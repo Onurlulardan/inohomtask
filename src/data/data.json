@@ -1,0 +1,62 @@
+[
+    {
+        "Id": 1,
+        "ScenarioType": 1,
+        "Name": "alarm",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    },
+    {
+        "Id": 2,
+        "ScenarioType": 2,
+        "Name": "lamba",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    },
+    {
+        "Id": 3,
+        "ScenarioType": 3,
+        "Name": "vana",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    },
+    {
+        "Id": 4,
+        "ScenarioType": 4,
+        "Name": "kombi",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    },
+    {
+        "Id": 5,
+        "ScenarioType": 5,
+        "Name": "pencere",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    },
+    {
+        "Id": 6,
+        "ScenarioType": 6,
+        "Name": "garaj",
+        "Icon": "fa-solid fa-bell",
+        "HomeOrOutdoor": null,
+        "OnOrOff": null,
+        "IncreaseAndDecrease": null,
+        "DataPayload": null
+    }
+]
