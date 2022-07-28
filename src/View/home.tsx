@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Data from '../data/data.json';
 
 interface Idata {
     Id: number;
@@ -11,6 +10,7 @@ interface Idata {
     IncreaseOrDecrease: number;
     Window: number;
     Garage: boolean;
+    Valve: boolean;
 }
 
 let MyData: Idata[] = [
@@ -22,17 +22,19 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": false,
         "IncreaseOrDecrease": 0,
         "Window": 0,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
      {   "Id": 1,
         "ScenarioType": 1,
         "Name": "Yatak Odası",
         "Icon": "ri-lightbulb-line",
-        "OnOrOff": false,
+        "OnOrOff": true,
         "HomeOrOutdoor": false,
         "IncreaseOrDecrease": 0,
         "Window": 0,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
      {   "Id": 2,
         "ScenarioType": 2,
@@ -42,7 +44,8 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": true,
         "IncreaseOrDecrease": 0,
         "Window": 1,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
      {   "Id": 3,
         "ScenarioType": 3,
@@ -52,7 +55,8 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": false,
         "IncreaseOrDecrease": 0,
         "Window": 2,
-        "Garage": false
+        "Garage": false,
+        "Valve": true
      },
      {   "Id": 4,
         "ScenarioType": 4,
@@ -62,7 +66,8 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": true,
         "IncreaseOrDecrease": 25.0,
         "Window": 0,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
      {   "Id": 5,
         "ScenarioType": 5,
@@ -72,7 +77,8 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": true,
         "IncreaseOrDecrease": 0,
         "Window": 2,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
      {   "Id": 6,
         "ScenarioType": 6,
@@ -82,7 +88,8 @@ let MyData: Idata[] = [
         "HomeOrOutdoor": true,
         "IncreaseOrDecrease": 0,
         "Window": 1,
-        "Garage": false
+        "Garage": false,
+        "Valve": false
      },
 ];
 
@@ -90,24 +97,11 @@ let MyData: Idata[] = [
 function Home() {
     const [myArray, setMyArray] = useState<Idata[]>([]);
     const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
-    const [alarm, setAlarm] = useState(false);
-    const [lamb, setLamb] = useState(false);
-    const [valve, setValve] = useState(false);
-    const [combi, setCombi] = useState(25.0);
-    const [windows, setWindows] = useState(0);
-    const [garages, setGarages] = useState(false);
-
-
-  
-
-    function setFinaly() {
-    //    myArray.push()
-    }
+    const [updateState, setUpdateState] = useState(false);
 
 
     useEffect(()=>{
         setMyArray(MyData);
-        setFinaly();
     },[myArray]);
 
 
@@ -159,29 +153,29 @@ function Home() {
                             <i className={data.Icon}></i>
                         </div>
                         {data.ScenarioType === 1 ? (<div className="control-list-onoff">
-                            <button type='button' onClick={(e) => {setLamb(true)}}>I</button>
-                            <button type='button' onClick={(e) => {setLamb(false)}}>0</button>
+                            <button type='button' onClick={(e) => {data.OnOrOff = true; setUpdateState(!updateState) }}>I</button>
+                            <button type='button' onClick={(e) => {data.OnOrOff = false; setUpdateState(!updateState)}}>0</button>
                         </div>) : "" }
                         {data.ScenarioType === 2 ? (<div className="control-list-onoff">
-                            <button type='button' onClick={(e) => {setAlarm(true)}}>Ev</button>
-                            <button type='button' onClick={(e) => {setAlarm(false)}}>Dış</button>
+                            <button type='button' onClick={(e) => { data.HomeOrOutdoor = true; setUpdateState(!updateState)}}>Ev</button>
+                            <button type='button' onClick={(e) => { data.HomeOrOutdoor = false; setUpdateState(!updateState)}}>Dış</button>
                         </div>) : "" }
                         {data.ScenarioType === 3 ? (<div className="control-list-onoff">
-                            <button type='button' onClick={(e) => {setValve(true)}}>I</button>
-                            <button type='button' onClick={(e) => {setValve(false)}}>0</button>
+                            <button type='button' onClick={(e) => { data.Valve = true; setUpdateState(!updateState)}}>I</button>
+                            <button type='button' onClick={(e) => { data.Valve = false; setUpdateState(!updateState)}}>0</button>
                         </div>) : "" }
                         {data.ScenarioType === 4 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button type='button' onClick={(e) => {setCombi(combi-0.5)}}>-</button>
-                            <p>{combi.toFixed(1)}</p>
-                            <button type='button' onClick={(e) => {setCombi(combi+0.5)}}>+</button>
+                            <button type='button' onClick={(e) => { data.IncreaseOrDecrease = data.IncreaseOrDecrease - 0.5; setUpdateState(!updateState)}}>-</button>
+                            <p>{data.IncreaseOrDecrease.toFixed(1)}</p>
+                            <button type='button' onClick={(e) => {data.IncreaseOrDecrease = data.IncreaseOrDecrease + 0.5; setUpdateState(!updateState)}}>+</button>
                         </div>) : "" }
                         {data.ScenarioType === 5 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button type="button" onClick={(e) => {setWindows(1)}}><i className="ri-arrow-up-s-fill"></i></button>
-                            <button type="button" onClick={(e) => {setWindows(0)}}><i className="fa-solid fa-equals"></i></button>
-                            <button type="button" onClick={(e) => {setWindows(2)}}><i className="ri-arrow-down-s-fill"></i></button>
+                            <button type="button" onClick={(e) => { data.Window = 1; setUpdateState(!updateState)}}><i className="ri-arrow-up-s-fill"></i></button>
+                            <button type="button" onClick={(e) => { data.Window = 0; setUpdateState(!updateState)}}><i className="fa-solid fa-equals"></i></button>
+                            <button type="button" onClick={(e) => { data.Window = 2; setUpdateState(!updateState)}}><i className="ri-arrow-down-s-fill"></i></button>
                         </div>) : "" }
                         {data.ScenarioType === 6 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button type="button" onClick={(e) => {setGarages(!garages)}} className="garage-text"><p>Çağır</p></button>
+                            <button type="button" onClick={(e) => { data.Garage = !data.Garage; setUpdateState(!updateState)}} className="garage-text"><p>Aç/Kapat</p></button>
                         </div>) : "" }
                         <div className="control-list-add">
                             <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data])}}>Ekle</button>
@@ -221,14 +215,14 @@ function Home() {
                                             <i className="fa-solid fa-bell"></i>
                                             {selectedarray.ScenarioType === 1 ? (<button type="button">{selectedarray.OnOrOff === true ? 1 : 0}</button>) : "" }
                                             {selectedarray.ScenarioType === 2 ? (<button type="button">{selectedarray.HomeOrOutdoor === true ? "Ev" : "Dış"}</button>) : "" }
-                                            {selectedarray.ScenarioType === 3 ? (<button type="button">{selectedarray.OnOrOff === true ? 1 : 0}</button>) : "" }
+                                            {selectedarray.ScenarioType === 3 ? (<button type="button">{selectedarray.Valve === true ? 1 : 0}</button>) : "" }
                                             {selectedarray.ScenarioType === 4 ? (<button type="button">{selectedarray.IncreaseOrDecrease}</button>) : "" }
                                             {selectedarray.ScenarioType === 5 ? (<button type="button">
                                                 {selectedarray.Window === 0 ? (<i className="fa-solid fa-equals"></i>) : ""}
                                                 {selectedarray.Window === 1 ? (<i className="ri-arrow-up-s-fill"></i>) : ""}
                                                 {selectedarray.Window === 2 ? (<i className="ri-arrow-down-s-fill"></i>) : ""}
                                             </button>) : "" }
-                                            {selectedarray.ScenarioType === 6 ? (<button type="button">Çağır</button>) : "" }
+                                            {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
                                             <button type="button"><i className="ri-arrow-up-line"></i></button>
