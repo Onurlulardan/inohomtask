@@ -106,17 +106,32 @@ function Home() {
     const [myArray, setMyArray] = useState<Idata[]>([]);
     const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
     const [updateState, setUpdateState] = useState(false);
-    const [block, setBlock] = useState(1);
+    const [position, setPosition] = useState(0);
+    const [positionlenght, setPositionlenght] = useState(0);
+
+
 
 
     useEffect(()=>{
         setMyArray(MyData);
-
-        
     },[myArray]);
 
-    function handleOnClick() {
-        
+
+    function handleOnClick(index: number) {
+        setPosition(index);
+        var i;
+        let array = [];  
+        for(i=0; i<positionlenght+1; i++)
+        {   
+            array.push(i)
+        }
+        // küçükten büyüğe sıralar
+        console.log("*",array.sort((a,b)=>{
+            return a - b;
+        }));
+
+        // let a = (position - 1) % positionlenght;
+        // setPosition(a);
     };
 
   return (
@@ -189,7 +204,7 @@ function Home() {
                             <button type="button" onClick={(e) => { data.Garage = !data.Garage; setUpdateState(!updateState)}} className="garage-text"><p>Aç/Kapat</p></button>
                         </div>) : "" }
                         <div className="control-list-add">
-                            <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data])}}>Ekle</button>
+                            <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data]); setPositionlenght(mySelectedArray.length)}}>Ekle</button>
                         </div>
                     </div>
                 </div>
@@ -201,6 +216,7 @@ function Home() {
                     {mySelectedArray.map((selectedarray, index)=>{
                         return (
                             <div key={index} className="displayed-item">
+                                {index === position ? (<div>
                                 <div className="displayed-item-top">
                                     <div className="displayed-item-name">
                                         <p>Gecikme süresi</p>
@@ -236,16 +252,16 @@ function Home() {
                                             {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
-                                            <button type="button" onClick={(e) => { console.log(mySelectedArray.length); setBlock(index - 1); setUpdateState(!updateState)}} ><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button" onClick={(e) => { handleOnClick(index) }} ><i className="ri-arrow-up-line"></i></button>
                                             <button type="button"><i className="ri-arrow-down-line"></i></button>
                                             <button type="button"><i className="ri-delete-bin-fill"></i></button>
                                         </div>
                                     </div>
                                 </div>
+                                </div>) : ""}
                             </div>
                         )
                     })}
-                    
                 </div>
             </div>
         </div>
