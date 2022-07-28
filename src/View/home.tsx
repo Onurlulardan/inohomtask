@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Data from '../data/data.json';
 
 interface Idata {
@@ -9,24 +9,30 @@ interface Idata {
     OnOrOff: boolean;
     HomeOrOutdoor: boolean;
     IncreaseOrDecrease: number;
+    Window: number;
+    Garage: boolean;
 }
 
 let MyData: Idata[] = [
     {   "Id": 0,
         "ScenarioType": 1,
         "Name": "Oturma Odası",
-        "Icon": "fa-solid fa-bell",
+        "Icon": "ri-lightbulb-line",
         "OnOrOff": true,
         "HomeOrOutdoor": false,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 0,
+        "Window": 0,
+        "Garage": false
      },
      {   "Id": 1,
         "ScenarioType": 1,
         "Name": "Yatak Odası",
-        "Icon": "fa-solid fa-bell",
+        "Icon": "ri-lightbulb-line",
         "OnOrOff": false,
         "HomeOrOutdoor": false,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 0,
+        "Window": 0,
+        "Garage": false
      },
      {   "Id": 2,
         "ScenarioType": 2,
@@ -34,44 +40,80 @@ let MyData: Idata[] = [
         "Icon": "fa-solid fa-bell",
         "OnOrOff": false,
         "HomeOrOutdoor": true,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 0,
+        "Window": 1,
+        "Garage": false
      },
      {   "Id": 3,
         "ScenarioType": 3,
-        "Name": "Alarm",
-        "Icon": "fa-solid fa-bell",
+        "Name": "Vana",
+        "Icon": "ri-contrast-drop-line",
         "OnOrOff": false,
-        "HomeOrOutdoor": true,
-        "IncreaseOrDecrease": 0
+        "HomeOrOutdoor": false,
+        "IncreaseOrDecrease": 0,
+        "Window": 2,
+        "Garage": false
      },
      {   "Id": 4,
         "ScenarioType": 4,
-        "Name": "Alarm",
-        "Icon": "fa-solid fa-bell",
+        "Name": "Panel Kombi",
+        "Icon": "fa-solid fa-temperature-high",
         "OnOrOff": false,
         "HomeOrOutdoor": true,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 25.0,
+        "Window": 0,
+        "Garage": false
      },
      {   "Id": 5,
         "ScenarioType": 5,
-        "Name": "Alarm",
-        "Icon": "fa-solid fa-bell",
+        "Name": "Perde",
+        "Icon": "ri-window-2-line",
         "OnOrOff": false,
         "HomeOrOutdoor": true,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 0,
+        "Window": 2,
+        "Garage": false
      },
      {   "Id": 6,
         "ScenarioType": 6,
-        "Name": "Alarm",
-        "Icon": "fa-solid fa-bell",
+        "Name": "Garaj",
+        "Icon": "fa-solid fa-warehouse",
         "OnOrOff": false,
         "HomeOrOutdoor": true,
-        "IncreaseOrDecrease": 0
+        "IncreaseOrDecrease": 0,
+        "Window": 1,
+        "Garage": false
      },
 ];
 
-console.log(MyData);
-function home() {
+
+function Home() {
+    const [myArray, setMyArray] = useState<Idata[]>([]);
+    const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
+    const [alarm, setAlarm] = useState(false);
+    const [lamb, setLamb] = useState(false);
+    const [valve, setValve] = useState(false);
+    const [combi, setCombi] = useState(25.0);
+    const [windows, setWindows] = useState(0);
+    const [garages, setGarages] = useState(false);
+
+
+  
+
+    function setFinaly() {
+    //    myArray.push()
+    }
+
+
+    useEffect(()=>{
+        setMyArray(MyData);
+        setFinaly();
+    },[myArray]);
+
+
+    console.log(myArray);
+
+
   return (
         <div className="item-cover">
             <div className="item-left">
@@ -106,7 +148,7 @@ function home() {
                         </div>
                     </div>
                 </div>
-                {MyData.map((data,index)=>{
+                {myArray.map((data,index)=>{
                     return (
                         <div key={index} className="control-list-cover">
                     <div className="control-list-item control-list-item-alert">
@@ -114,35 +156,35 @@ function home() {
                             <p>{data.Name}</p>
                         </div>
                         <div className="control-list-icon">
-                            <i className="fa-solid fa-bell"></i>
+                            <i className={data.Icon}></i>
                         </div>
                         {data.ScenarioType === 1 ? (<div className="control-list-onoff">
-                            <button>I</button>
-                            <button>0</button>
+                            <button type='button' onClick={(e) => {setLamb(true)}}>I</button>
+                            <button type='button' onClick={(e) => {setLamb(false)}}>0</button>
                         </div>) : "" }
                         {data.ScenarioType === 2 ? (<div className="control-list-onoff">
-                            <button>Ev</button>
-                            <button>Dış</button>
+                            <button type='button' onClick={(e) => {setAlarm(true)}}>Ev</button>
+                            <button type='button' onClick={(e) => {setAlarm(false)}}>Dış</button>
                         </div>) : "" }
                         {data.ScenarioType === 3 ? (<div className="control-list-onoff">
-                            <button>I</button>
-                            <button>0</button>
+                            <button type='button' onClick={(e) => {setValve(true)}}>I</button>
+                            <button type='button' onClick={(e) => {setValve(false)}}>0</button>
                         </div>) : "" }
                         {data.ScenarioType === 4 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button>-</button>
-                            <p>25.0</p>
-                            <button>+</button>
+                            <button type='button' onClick={(e) => {setCombi(combi-0.5)}}>-</button>
+                            <p>{combi.toFixed(1)}</p>
+                            <button type='button' onClick={(e) => {setCombi(combi+0.5)}}>+</button>
                         </div>) : "" }
                         {data.ScenarioType === 5 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button type="button"><i className="ri-arrow-up-s-fill"></i></button>
-                            <button type="button" disabled><i className="fa-solid fa-equals"></i></button>
-                            <button type="button"><i className="ri-arrow-down-s-fill"></i></button>
+                            <button type="button" onClick={(e) => {setWindows(1)}}><i className="ri-arrow-up-s-fill"></i></button>
+                            <button type="button" onClick={(e) => {setWindows(0)}}><i className="fa-solid fa-equals"></i></button>
+                            <button type="button" onClick={(e) => {setWindows(2)}}><i className="ri-arrow-down-s-fill"></i></button>
                         </div>) : "" }
                         {data.ScenarioType === 6 ? (<div className="control-list-onoff contol-list-incdec">
-                            <button type="button" className="garage-text"><p>Çağır</p></button>
+                            <button type="button" onClick={(e) => {setGarages(!garages)}} className="garage-text"><p>Çağır</p></button>
                         </div>) : "" }
                         <div className="control-list-add">
-                            <button>Ekle</button>
+                            <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data])}}>Ekle</button>
                         </div>
                     </div>
                 </div>
@@ -151,115 +193,58 @@ function home() {
             </div>
             <div className="item-right">
                 <div className="contol-list-show-cover">
-                    <div className="displayed-item">
-                        <div className="displayed-item-top">
-                            <div className="displayed-item-name">
-                                <p>Gecikme süresi</p>
-                            </div>
-                            <div className="displayed-item-button">
-                                <div>
-                                    <button>-10</button>
-                                    <button>-1</button>
+                    {mySelectedArray.map((selectedarray, index)=>{
+                        return (
+                            <div key={index} className="displayed-item">
+                                <div className="displayed-item-top">
+                                    <div className="displayed-item-name">
+                                        <p>Gecikme süresi</p>
+                                    </div>
+                                    <div className="displayed-item-button">
+                                        <div>
+                                            <button>-10</button>
+                                            <button>-1</button>
+                                        </div>
+                                        <p>00 sn</p>
+                                        <div>
+                                            <button>+1</button>
+                                            <button>+10</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p>00 sn</p>
-                                <div>
-                                    <button>+1</button>
-                                    <button>+10</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="displayed-item-bottom">
-                            <div className="displayed-item-name bottom-name">
-                                <p>Alarm</p>
-                            </div>
-                            <div className="displayed-item-inner">
-                                <div className="displayed-item-inner-button-left">
-                                    <i className="fa-solid fa-bell"></i>
-                                    <button type="button">Ev</button>
-                                </div>
-                                <div className="displayed-item-inner-button-right">
-                                    <button type="button"><i className="ri-arrow-up-line"></i></button>
-                                    <button type="button"><i className="ri-arrow-down-line"></i></button>
-                                    <button type="button"><i className="ri-delete-bin-fill"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="displayed-item">
-                        <div className="displayed-item-top">
-                            <div className="displayed-item-name">
-                                <p>Gecikme süresi</p>
-                            </div>
-                            <div className="displayed-item-button">
-                                <div>
-                                    <button>-10</button>
-                                    <button>-1</button>
-                                </div>
-                                <p>00 sn</p>
-                                <div>
-                                    <button>+1</button>
-                                    <button>+10</button>
+                                <div className="displayed-item-bottom">
+                                    <div className="displayed-item-name bottom-name">
+                                        <p>{selectedarray.Name}</p>
+                                    </div>
+                                    <div className="displayed-item-inner">
+                                        <div className="displayed-item-inner-button-left">
+                                            <i className="fa-solid fa-bell"></i>
+                                            {selectedarray.ScenarioType === 1 ? (<button type="button">{selectedarray.OnOrOff === true ? 1 : 0}</button>) : "" }
+                                            {selectedarray.ScenarioType === 2 ? (<button type="button">{selectedarray.HomeOrOutdoor === true ? "Ev" : "Dış"}</button>) : "" }
+                                            {selectedarray.ScenarioType === 3 ? (<button type="button">{selectedarray.OnOrOff === true ? 1 : 0}</button>) : "" }
+                                            {selectedarray.ScenarioType === 4 ? (<button type="button">{selectedarray.IncreaseOrDecrease}</button>) : "" }
+                                            {selectedarray.ScenarioType === 5 ? (<button type="button">
+                                                {selectedarray.Window === 0 ? (<i className="fa-solid fa-equals"></i>) : ""}
+                                                {selectedarray.Window === 1 ? (<i className="ri-arrow-up-s-fill"></i>) : ""}
+                                                {selectedarray.Window === 2 ? (<i className="ri-arrow-down-s-fill"></i>) : ""}
+                                            </button>) : "" }
+                                            {selectedarray.ScenarioType === 6 ? (<button type="button">Çağır</button>) : "" }
+                                        </div>
+                                        <div className="displayed-item-inner-button-right">
+                                            <button type="button"><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button"><i className="ri-arrow-down-line"></i></button>
+                                            <button type="button"><i className="ri-delete-bin-fill"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="displayed-item-bottom">
-                            <div className="displayed-item-name bottom-name">
-                                <p>3</p>
-                            </div>
-                            <div className="displayed-item-inner">
-                                <div className="displayed-item-inner-button-left">
-                                    <i className="fa-solid fa-bell"></i>
-                                    <button type="button">0</button>
-                                </div>
-                                <div className="displayed-item-inner-button-right">
-                                    <button type="button"><i className="ri-arrow-up-line"></i></button>
-                                    <button type="button"><i className="ri-arrow-down-line"></i></button>
-                                    <button type="button"><i className="ri-delete-bin-fill"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="displayed-item">
-                        <div className="displayed-item-top">
-                            <div className="displayed-item-name">
-                                <p>Gecikme süresi</p>
-                            </div>
-                            <div className="displayed-item-button">
-                                <div>
-                                    <button>-10</button>
-                                    <button>-1</button>
-                                </div>
-                                <p>00 sn</p>
-                                <div>
-                                    <button>+1</button>
-                                    <button>+10</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="displayed-item-bottom">
-                            <div className="displayed-item-name bottom-name">
-                                <p>Garaj2</p>
-                            </div>
-                            <div className="displayed-item-inner">
-                                <div className="displayed-item-inner-button-left">
-                                    <i className="fa-solid fa-bell"></i>
-                                    <button type="button">1</button>
-                                </div>
-                                <div className="displayed-item-inner-button-right">
-                                    <button type="button"><i className="ri-arrow-up-line"></i></button>
-                                    <button type="button"><i className="ri-arrow-down-line"></i></button>
-                                    <button type="button"><i className="ri-delete-bin-fill"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        )
+                    })}
+                    
                 </div>
             </div>
-            {/* {Data.map((datas,index)=>{
-                return <p key={datas.Id}> {datas.Name} </p>
-            })} */}
         </div>
   )
 }
 
-export default home
+export default Home

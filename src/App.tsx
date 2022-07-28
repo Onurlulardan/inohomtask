@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import HomeView from './View/home';
+import HomeView from './View/Home';
 
 
 
