@@ -11,6 +11,7 @@ interface Idata {
     Window: number;
     Garage: boolean;
     Valve: boolean;
+    Time: number;
 }
 
 let MyData: Idata[] = [
@@ -23,7 +24,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 0,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
      {   "Id": 1,
         "ScenarioType": 1,
@@ -34,7 +36,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 0,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
      {   "Id": 2,
         "ScenarioType": 2,
@@ -45,7 +48,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 1,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
      {   "Id": 3,
         "ScenarioType": 3,
@@ -56,7 +60,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 2,
         "Garage": false,
-        "Valve": true
+        "Valve": true,
+        "Time": 0
      },
      {   "Id": 4,
         "ScenarioType": 4,
@@ -67,7 +72,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 25.0,
         "Window": 0,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
      {   "Id": 5,
         "ScenarioType": 5,
@@ -78,7 +84,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 2,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
      {   "Id": 6,
         "ScenarioType": 6,
@@ -89,7 +96,8 @@ let MyData: Idata[] = [
         "IncreaseOrDecrease": 0,
         "Window": 1,
         "Garage": false,
-        "Valve": false
+        "Valve": false,
+        "Time": 0
      },
 ];
 
@@ -98,15 +106,18 @@ function Home() {
     const [myArray, setMyArray] = useState<Idata[]>([]);
     const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
     const [updateState, setUpdateState] = useState(false);
+    const [block, setBlock] = useState(1);
 
 
     useEffect(()=>{
         setMyArray(MyData);
+
+        
     },[myArray]);
 
-
-    console.log(myArray);
-
+    function handleOnClick() {
+        
+    };
 
   return (
         <div className="item-cover">
@@ -196,19 +207,19 @@ function Home() {
                                     </div>
                                     <div className="displayed-item-button">
                                         <div>
-                                            <button>-10</button>
-                                            <button>-1</button>
+                                            <button type='button' onClick={(e) => { selectedarray.Time = selectedarray.Time -10; setUpdateState(!updateState) }}>-10</button>
+                                            <button type='button' onClick={(e) => { selectedarray.Time = selectedarray.Time - 1; setUpdateState(!updateState) }}>-1</button>
                                         </div>
-                                        <p>00 sn</p>
+                                        <p>{selectedarray.Time} sn</p>
                                         <div>
-                                            <button>+1</button>
-                                            <button>+10</button>
+                                            <button type='button' onClick={(e) => { selectedarray.Time = selectedarray.Time + 1; setUpdateState(!updateState) }} >+1</button>
+                                            <button type='button' onClick={(e) => { selectedarray.Time = selectedarray.Time + 10; setUpdateState(!updateState) }} >+10</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="displayed-item-bottom">
                                     <div className="displayed-item-name bottom-name">
-                                        <p>{selectedarray.Name}</p>
+                                        <p> {index} {selectedarray.Name}</p>
                                     </div>
                                     <div className="displayed-item-inner">
                                         <div className="displayed-item-inner-button-left">
@@ -225,7 +236,7 @@ function Home() {
                                             {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
-                                            <button type="button"><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button" onClick={(e) => { console.log(mySelectedArray.length); setBlock(index - 1); setUpdateState(!updateState)}} ><i className="ri-arrow-up-line"></i></button>
                                             <button type="button"><i className="ri-arrow-down-line"></i></button>
                                             <button type="button"><i className="ri-delete-bin-fill"></i></button>
                                         </div>
