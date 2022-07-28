@@ -114,15 +114,13 @@ function Home() {
     const [myArray, setMyArray] = useState<Idata[]>([]);
     const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
     const [updateState, setUpdateState] = useState(false);
-    const [positionlenght, setPositionlenght] = useState(0);
 
 
 
-
-    useEffect(()=>{
+    useEffect(() => {
         setMyArray(MyData);
         handleOnClick();
-    },[myArray]);
+      }, []);
 
 
     function handleOnClick() {
@@ -209,7 +207,7 @@ function Home() {
                             <button type="button" onClick={(e) => { data.Garage = !data.Garage; setUpdateState(!updateState)}} className="garage-text"><p>Aç/Kapat</p></button>
                         </div>) : "" }
                         <div className="control-list-add">
-                            <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data]); setPositionlenght(mySelectedArray.length)}}>Ekle</button>
+                            <button type='button' onClick={(e) => {setMySelectedArray([...mySelectedArray, data])}}>Ekle</button>
                         </div>
                     </div>
                 </div>
@@ -258,8 +256,8 @@ function Home() {
                                             {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
-                                            <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position - 1; setUpdateState(!updateState) }} ><i className="ri-arrow-up-line"></i></button>
-                                            <button type="button"><i className="ri-arrow-down-line"></i></button>
+                                            <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position - 1;}} ><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position + 1;}} ><i className="ri-arrow-down-line"></i></button>
                                             <button type="button"><i className="ri-delete-bin-fill"></i></button>
                                         </div>
                                     </div>
