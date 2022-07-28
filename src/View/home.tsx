@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 interface Idata {
     Id: number;
+    Position: number;
     ScenarioType: number;
     Name: string;
     Icon: string;
@@ -25,7 +26,8 @@ let MyData: Idata[] = [
         "Window": 0,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 0
      },
      {   "Id": 1,
         "ScenarioType": 1,
@@ -37,7 +39,8 @@ let MyData: Idata[] = [
         "Window": 0,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 1
      },
      {   "Id": 2,
         "ScenarioType": 2,
@@ -49,7 +52,8 @@ let MyData: Idata[] = [
         "Window": 1,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 2
      },
      {   "Id": 3,
         "ScenarioType": 3,
@@ -61,7 +65,8 @@ let MyData: Idata[] = [
         "Window": 2,
         "Garage": false,
         "Valve": true,
-        "Time": 0
+        "Time": 0,
+        "Position": 3
      },
      {   "Id": 4,
         "ScenarioType": 4,
@@ -73,7 +78,8 @@ let MyData: Idata[] = [
         "Window": 0,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 4
      },
      {   "Id": 5,
         "ScenarioType": 5,
@@ -85,7 +91,8 @@ let MyData: Idata[] = [
         "Window": 2,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 5
      },
      {   "Id": 6,
         "ScenarioType": 6,
@@ -97,7 +104,8 @@ let MyData: Idata[] = [
         "Window": 1,
         "Garage": false,
         "Valve": false,
-        "Time": 0
+        "Time": 0,
+        "Position": 6
      },
 ];
 
@@ -106,7 +114,6 @@ function Home() {
     const [myArray, setMyArray] = useState<Idata[]>([]);
     const [mySelectedArray, setMySelectedArray] = useState<Idata[]>([]);
     const [updateState, setUpdateState] = useState(false);
-    const [position, setPosition] = useState(0);
     const [positionlenght, setPositionlenght] = useState(0);
 
 
@@ -114,24 +121,22 @@ function Home() {
 
     useEffect(()=>{
         setMyArray(MyData);
+        handleOnClick();
     },[myArray]);
 
 
-    function handleOnClick(index: number) {
-        setPosition(index);
-        var i;
-        let array = [];  
-        for(i=0; i<positionlenght+1; i++)
-        {   
-            array.push(i)
-        }
-        // küçükten büyüğe sıralar
-        console.log("*",array.sort((a,b)=>{
-            return a - b;
-        }));
-
-        // let a = (position - 1) % positionlenght;
-        // setPosition(a);
+    function handleOnClick() {
+        // var i;
+        // let array = [];  
+        // for(i=0; i<positionlenght+1; i++)
+        // {   
+        //     array.push(i)
+        // }
+        // // küçükten büyüğe sıralar
+        // console.log("*",array.sort((a,b)=>{
+        //     return a - b;
+        // }));
+        setMySelectedArray([...mySelectedArray]);
     };
 
   return (
@@ -213,10 +218,11 @@ function Home() {
             </div>
             <div className="item-right">
                 <div className="contol-list-show-cover">
-                    {mySelectedArray.map((selectedarray, index)=>{
+                    {mySelectedArray && mySelectedArray
+                    .sort((a,b) => a.Position > b.Position ? 1 : -1 )
+                    .map((selectedarray, index) =>{
                         return (
                             <div key={index} className="displayed-item">
-                                {index === position ? (<div>
                                 <div className="displayed-item-top">
                                     <div className="displayed-item-name">
                                         <p>Gecikme süresi</p>
@@ -235,7 +241,7 @@ function Home() {
                                 </div>
                                 <div className="displayed-item-bottom">
                                     <div className="displayed-item-name bottom-name">
-                                        <p> {index} {selectedarray.Name}</p>
+                                        <p>{selectedarray.Name}</p>
                                     </div>
                                     <div className="displayed-item-inner">
                                         <div className="displayed-item-inner-button-left">
@@ -252,13 +258,12 @@ function Home() {
                                             {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
-                                            <button type="button" onClick={(e) => { handleOnClick(index) }} ><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position - 1; setUpdateState(!updateState) }} ><i className="ri-arrow-up-line"></i></button>
                                             <button type="button"><i className="ri-arrow-down-line"></i></button>
                                             <button type="button"><i className="ri-delete-bin-fill"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                </div>) : ""}
                             </div>
                         )
                     })}
