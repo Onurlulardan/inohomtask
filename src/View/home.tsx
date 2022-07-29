@@ -119,8 +119,7 @@ function Home() {
 
     useEffect(() => {
         setMyArray(MyData);
-        handleOnClick();
-      }, []);
+      },[]);
 
 
     function handleOnClick() {
@@ -134,8 +133,20 @@ function Home() {
         // console.log("*",array.sort((a,b)=>{
         //     return a - b;
         // }));
+        // mySelectedArray.map((arr: Idata)=>{
+        //     arr.Position = arr.Position - 1;
+        //     console.log(arr)
+        // });
+
+
         setMySelectedArray([...mySelectedArray]);
+
+
     };
+
+    useEffect(() => {
+        console.log(mySelectedArray)
+      },[mySelectedArray]);
 
   return (
         <div className="item-cover">
@@ -216,7 +227,7 @@ function Home() {
             </div>
             <div className="item-right">
                 <div className="contol-list-show-cover">
-                    {mySelectedArray && mySelectedArray
+                    {mySelectedArray
                     .sort((a,b) => a.Position > b.Position ? 1 : -1 )
                     .map((selectedarray, index) =>{
                         return (
@@ -256,7 +267,7 @@ function Home() {
                                             {selectedarray.ScenarioType === 6 ? (<button type="button">{selectedarray.Garage === true ? "Açık" : "Kapalı"}</button>) : "" }
                                         </div>
                                         <div className="displayed-item-inner-button-right">
-                                            <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position - 1;}} ><i className="ri-arrow-up-line"></i></button>
+                                            <button type="button"  onClick={(e) => {handleOnClick(); selectedarray.Position = selectedarray.Position - 1; }} ><i className="ri-arrow-up-line"></i></button>
                                             <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position + 1;}} ><i className="ri-arrow-down-line"></i></button>
                                             <button type="button"><i className="ri-delete-bin-fill"></i></button>
                                         </div>
