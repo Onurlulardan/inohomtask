@@ -40,7 +40,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": false,
         "Time": 0,
-        "Position": 1
+        "Position": 0
      },
      {   "Id": 2,
         "ScenarioType": 2,
@@ -53,7 +53,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": false,
         "Time": 0,
-        "Position": 2
+        "Position": 0
      },
      {   "Id": 3,
         "ScenarioType": 3,
@@ -66,7 +66,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": true,
         "Time": 0,
-        "Position": 3
+        "Position": 0
      },
      {   "Id": 4,
         "ScenarioType": 4,
@@ -79,7 +79,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": false,
         "Time": 0,
-        "Position": 4
+        "Position": 0
      },
      {   "Id": 5,
         "ScenarioType": 5,
@@ -92,7 +92,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": false,
         "Time": 0,
-        "Position": 5
+        "Position": 0
      },
      {   "Id": 6,
         "ScenarioType": 6,
@@ -105,7 +105,7 @@ let MyData: Idata[] = [
         "Garage": false,
         "Valve": false,
         "Time": 0,
-        "Position": 6
+        "Position": 0
      },
 ];
 
@@ -123,30 +123,13 @@ function Home() {
 
 
     function handleOnClick() {
-        // var i;
-        // let array = [];  
-        // for(i=0; i<positionlenght+1; i++)
-        // {   
-        //     array.push(i)
-        // }
-        // // küçükten büyüğe sıralar
-        // console.log("*",array.sort((a,b)=>{
-        //     return a - b;
-        // }));
-        // mySelectedArray.map((arr: Idata)=>{
-        //     arr.Position = arr.Position - 1;
-        //     console.log(arr)
-        // });
-
-
         setMySelectedArray([...mySelectedArray]);
-
-
     };
 
-    useEffect(() => {
-        console.log(mySelectedArray)
-      },[mySelectedArray]);
+    function deleteItem(index: number) {
+        setMySelectedArray((mySelectedArray) => mySelectedArray.filter((_, i) => i !== index));
+    }
+
 
   return (
         <div className="item-cover">
@@ -231,7 +214,7 @@ function Home() {
                     .sort((a,b) => a.Position > b.Position ? 1 : -1 )
                     .map((selectedarray, index) =>{
                         return (
-                            <div key={index} className="displayed-item">
+                            <div key={index}  className="displayed-item">
                                 <div className="displayed-item-top">
                                     <div className="displayed-item-name">
                                         <p>Gecikme süresi</p>
@@ -269,7 +252,7 @@ function Home() {
                                         <div className="displayed-item-inner-button-right">
                                             <button type="button"  onClick={(e) => {handleOnClick(); selectedarray.Position = selectedarray.Position - 1; }} ><i className="ri-arrow-up-line"></i></button>
                                             <button type="button"  onClick={(e) => { handleOnClick(); selectedarray.Position = selectedarray.Position + 1;}} ><i className="ri-arrow-down-line"></i></button>
-                                            <button type="button"><i className="ri-delete-bin-fill"></i></button>
+                                            <button type="button" onClick={(e) =>{ deleteItem(index); }} ><i className="ri-delete-bin-fill"></i></button>
                                         </div>
                                     </div>
                                 </div>
