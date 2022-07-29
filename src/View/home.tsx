@@ -43,7 +43,7 @@ let MyData: Idata[] = [
         "Position": 0
      },
      {   "Id": 2,
-        "ScenarioType": 2,
+        "ScenarioType": 3,
         "Name": "Alarm",
         "Icon": "fa-solid fa-bell",
         "OnOrOff": false,
@@ -56,7 +56,7 @@ let MyData: Idata[] = [
         "Position": 0
      },
      {   "Id": 3,
-        "ScenarioType": 3,
+        "ScenarioType": 6,
         "Name": "Vana",
         "Icon": "ri-contrast-drop-line",
         "OnOrOff": false,
@@ -95,7 +95,7 @@ let MyData: Idata[] = [
         "Position": 0
      },
      {   "Id": 6,
-        "ScenarioType": 6,
+        "ScenarioType": 2,
         "Name": "Garaj",
         "Icon": "fa-solid fa-warehouse",
         "OnOrOff": false,
@@ -116,7 +116,6 @@ function Home() {
     const [updateState, setUpdateState] = useState(false);
 
 
-
     useEffect(() => {
         setMyArray(MyData);
       },[]);
@@ -128,6 +127,18 @@ function Home() {
 
     function deleteItem(index: number) {
         setMySelectedArray((mySelectedArray) => mySelectedArray.filter((_, i) => i !== index));
+    }
+
+    function listToAll() {
+        setMyArray(myArray.sort((a, b) => a.Id > b.Id ? 1 : -1));
+    }
+
+    function listToAZ(){
+        setMyArray(myArray.sort((a, b) => a.Name.localeCompare(b.Name)));
+    }
+
+    function listToType(){
+        setMyArray(myArray.sort((a, b) => a.ScenarioType > b.ScenarioType ? 1 : -1));
     }
 
 
@@ -149,7 +160,7 @@ function Home() {
                     <div className="control-bottom">
                         <div>
                             <input type="radio" id="all"  name="inpradio"/>
-                            <label htmlFor="all">Hepsi</label>
+                            <label onClick={(e) => {listToAll(); setUpdateState(!updateState)}} htmlFor="all">Hepsi</label>
                         </div>
                         <div>
                             <input type="radio" id="alan"  name="inpradio"/>
@@ -157,11 +168,11 @@ function Home() {
                         </div>
                         <div>
                             <input type="radio" id="tip"  name="inpradio"/>
-                            <label htmlFor="tip">Tip</label>
+                            <label onClick={(e) => {listToType(); setUpdateState(!updateState)}} htmlFor="tip">Tip</label>
                         </div>
                         <div>
                             <input type="radio" id="atoz"  name="inpradio"/>
-                            <label htmlFor="atoz">A-Z</label>
+                            <label onClick={(e) => {listToAZ(); setUpdateState(!updateState)}} htmlFor="atoz">A-Z</label>
                         </div>
                     </div>
                 </div>

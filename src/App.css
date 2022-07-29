@@ -10,13 +10,11 @@
 }
 html,
 body {
-  padding-top: 15px;
-  padding-left: 15px;
-  /* font-family: "Roboto", sans-serif;    */
   font-size: 16px;
-  height: 100vh;
+  height: 100%;
+  background-attachment: fixed !important;
   background: rgb(39,198,199);
-  background: linear-gradient(45deg, rgba(39,198,199,1) 29%, rgba(131,58,180,1) 54%, rgba(252,176,69,1) 100%);
+  background: linear-gradient(30deg, rgba(39,198,199,1) 28%, rgba(131,58,180,1) 44%, rgba(131,58,180,1) 65%, rgba(252,176,69,1) 100%);
 }
 ul,
 li,
@@ -27,7 +25,6 @@ ol {
 a {
   text-decoration: none;
 }
-
 .body-box {
   display: flex;
   justify-content: center;
@@ -119,7 +116,10 @@ a {
   margin-bottom: 5px;
 }
 .control-list-item > div {
-  width: 20%;
+  width: 200px;
+}
+.control-list-item > div > button {
+  margin-left: 5px;
 }
 .control-list-item > div:last-child {
   display: flex;
@@ -172,7 +172,7 @@ font-size: 35px;
   margin: 0px 20px;
 }
 .garage-text {
-  width: 60px !important;
+  width: 90px !important;
 }
 .garage-text >p {
   font-size: 18px;
@@ -255,4 +255,18 @@ font-size: 35px;
 }
 .displayed-item-inner-button-right > button > i {
   font-size: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  .item-cover {
+    flex-wrap: wrap;
+    padding: 10px;
+}
+  .item-left, .item-right {
+    width: 100%;
+    padding: 0px;
+}
+.item-right {
+  margin-top: 35px;
+}
 }
